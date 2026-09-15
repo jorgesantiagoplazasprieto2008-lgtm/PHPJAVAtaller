@@ -7,6 +7,10 @@
 
     <display-name>SVIS Backend API</display-name>
 
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
+
     <!-- Los Servlets y Filtros son detectados automáticamente mediante anotaciones @WebServlet y @WebFilter -->
 
 </web-app>

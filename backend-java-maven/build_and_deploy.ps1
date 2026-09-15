@@ -5,7 +5,7 @@ param (
 
 $ErrorActionPreference = "Stop"
 
-$ProjectRoot = "c:\Users\Usuario\.antigravity-ide\PHPJava\backend-java-maven"
+$ProjectRoot = $PSScriptRoot
 $TomcatLib = "C:\Servidores\Apache Software Foundation\Tomcat 11.0\lib"
 $TomcatWebapps = "C:\Servidores\Apache Software Foundation\Tomcat 11.0\webapps"
 
@@ -34,9 +34,12 @@ New-Item -ItemType Directory -Path $LibDir -Force | Out-Null
 Copy-Item $MysqlJar -Destination $LibDir -Force
 Copy-Item $GsonJar -Destination $LibDir -Force
 
-# Copiar web.xml
-$WebXmlSrc = "$ProjectRoot\src\main\webapp\WEB-INF\web.xml"
-Copy-Item $WebXmlSrc -Destination "$TargetDir\WEB-INF\web.xml" -Force
+# Copiar todos los archivos de webapp (web.xml, META-INF, index.html)
+$WebappSrc = "$ProjectRoot\src\main\webapp"
+if (Test-Path $WebappSrc) {
+    Copy-Item -Path "$WebappSrc\*" -Destination $TargetDir -Recurse -Force
+}
+
 
 # Listar todos los archivos .java
 $JavaFiles = Get-ChildItem -Path "$ProjectRoot\src\main\java" -Filter "*.java" -Recurse | ForEach-Object { $_.FullName }
